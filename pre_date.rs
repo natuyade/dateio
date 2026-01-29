@@ -1,1 +1,0 @@
-pub const pre_date:[&std; 2] = ["3/1", "testimg"];

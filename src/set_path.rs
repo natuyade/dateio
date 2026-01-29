@@ -8,10 +8,10 @@ pub fn change_path() {
     
     let path = "setting.ini";
     
-    let mut file = fs::File::create("setting.ini").expect("Couldn't create file");
+    let mut file = fs::File::create("setting.ini").expect("\nCouldn't create file\n");
     file.write_all(b"[Settings]\npath = {{PATH}}").unwrap();
     
-    println!("\nEnter premier folder path:");
+    println!("\nEnter src folder path:");
     
     let mut input_path = String::new();
     io::stdin().read_line(&mut input_path).unwrap();
@@ -22,7 +22,7 @@ pub fn change_path() {
     
     fs::write(path, setting_file).unwrap();
     
-    println!("\nDone.\n[Settings]\npath = {}",input_path.trim());
+    println!("\nDone.\n[Settings]\npath = {}\n",input_path.trim());
     
     set_command()
 }

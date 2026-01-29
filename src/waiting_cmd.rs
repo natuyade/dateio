@@ -7,7 +7,7 @@ use crate::set_path::change_path;
 pub fn set_command() {
     // 条件なしの無限loop
     loop {
-        println!("\nType command.(or type help)");
+        println!("Type command.(or type help)");
         io::stdout().flush().unwrap();
         
             let mut input_cmd = String::new();

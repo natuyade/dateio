@@ -39,10 +39,10 @@ pub fn create_file() {
         
         let file_path = folder_path.join(file_name);
         
-        let mut file = fs::File::create(&file_path).expect("Couldn't create file");
+        let mut file = fs::File::create(&file_path).expect("\nCouldn't create file\n");
         // b""は文字リテラルをバイト列化させる
         // std::io,fsはバイト単位でファイルを読み書きする
-        file.write_all(b"pub const pre_date:[&std; 2] = [\"{{DATE}}\", \"{{URL}}\"];").expect("Couldn't write file");
+        file.write_all(b"pub const pre_date:[&str; 2] = [\"{{DATE}}\", \"{{URL}}\"];").expect("\nCouldn't write\n");
         
         println!("\nEnter date:");
         // 初期化型用意
@@ -55,7 +55,7 @@ pub fn create_file() {
         io::stdin().read_line(&mut url).unwrap();
         
         // trimで半角スペース,\t,\n,\rの空白を消せる
-        println!("date: {}, img_url: {}",date.trim(),url.trim());
+        println!("\nDone.\ndate: {}, img_url: {}",date.trim(),url.trim());
         
         // ReadWrite用のファイル用意
         let mut pre_file = fs::read_to_string(&file_path).unwrap();
@@ -67,7 +67,7 @@ pub fn create_file() {
         // writeは受け取った文字列を自動でバイト列に変換して書き込みを行うためbの必要なし
         fs::write(&file_path, pre_file).unwrap();
     } else {
-        println!("\nSettingFile not found,\nPlease use path command first.");
+        println!("\nSettingFile not found,\nPlease use path command first.\n");
         set_command()
     }
 }
