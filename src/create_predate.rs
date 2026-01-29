@@ -1,44 +1,73 @@
 use std::io;
 use std::fs;
 use std::io::*;
+use std::path::PathBuf;
+
+use crate::waiting_cmd::set_command;
 
 pub fn create_file() {
     
-    let path = "pre_date.rs";
-    
-    if !std::path::Path::new(path).exists() {
-        let mut file = fs::File::create("pre_date.rs").expect("Couldn't create file");
+    // .exists()でcurrent dirにパスのものが存在するかを検知
+    if std::path::Path::new("setting.ini").exists() {
+        
+        let settings = fs::read_to_string("setting.ini").unwrap();
+        
+        // ファイル操作にPathBufを使うので初期化
+        let mut path: Option<PathBuf> = None;
+        
+        // SettingFileからpathの設定を探索
+        for line in settings.lines() {
+            // そのlineの始めの"="の左右の値を取得する
+            if let Some((key, value)) = line.split_once("=") {
+                // trimで余白を消し必要な項目を見つける
+                if key.trim() == "path" {
+                    // 必要なkeyが見つかったら値をとりPathBuf(パス型)へ変換
+                    path = Some(PathBuf::from(value.trim()));
+                }
+            }
+        }
+        
+        // Some()のままなので値取り出し
+        let folder_path = path.unwrap();
+        
+        if !folder_path.exists() {
+            // allは複数のdirを作れる, allがないと単体しか作れないのでエラー
+            fs::create_dir_all(&folder_path).unwrap();
+        }
+        
+        let file_name = "pre_date.rs";
+        
+        let file_path = folder_path.join(file_name);
+        
+        let mut file = fs::File::create(&file_path).expect("Couldn't create file");
         // b""は文字リテラルをバイト列化させる
         // std::io,fsはバイト単位でファイルを読み書きする
-        file.write_all(b"pub const pre_date:[&std; 2] = [\"{{DATE}}\", \"{{URL}}\"]").expect("Couldn't write file");
+        file.write_all(b"pub const pre_date:[&std; 2] = [\"{{DATE}}\", \"{{URL}}\"];").expect("Couldn't write file");
+        
+        println!("\nEnter date:");
+        // 初期化型用意
+        let mut date = String::new();
+        // キーボード入力を受け取る.入力された文字をinputに書き込む.unwrap
+        io::stdin().read_line(&mut date).unwrap();
+        
+        println!("\nEnter image url:");
+        let mut url = String::new();
+        io::stdin().read_line(&mut url).unwrap();
+        
+        // trimで半角スペース,\t,\n,\rの空白を消せる
+        println!("date: {}, img_url: {}",date.trim(),url.trim());
+        
+        // ReadWrite用のファイル用意
+        let mut pre_file = fs::read_to_string(&file_path).unwrap();
+        
+        // replace (from, to)
+        pre_file = pre_file.replace("{{DATE}}", date.trim());
+        pre_file = pre_file.replace("{{URL}}", url.trim());
+        
+        // writeは受け取った文字列を自動でバイト列に変換して書き込みを行うためbの必要なし
+        fs::write(&file_path, pre_file).unwrap();
     } else {
-        let mut file = fs::File::create("pre_date.rs").expect("Couldn't create file");
-        file.write_all(b"pub const pre_date:[&std; 2] = [\"{{DATE}}\", \"{{URL}}\"]").expect("Couldn't write file");
+        println!("\nSettingFile not found,\nPlease use path command first.");
+        set_command()
     }
-    
-    println!("Enter date:");
-    // 初期化型用意
-    let mut date = String::new();
-    // キーボード入力を受け取る.入力された文字をinputに書き込む.unwrap
-    io::stdin().read_line(&mut date).unwrap();
-    
-    println!("Enter image url:");
-    let mut url = String::new();
-    io::stdin().read_line(&mut url).unwrap();
-    
-    // trimで改行無しの一行だけを読み取る
-    println!("date: {}, img_url: {}",date.trim(),url.trim());
-    
-    // ReadWrite用のファイル用意
-    let mut pre_file = fs::read_to_string("pre_date.rs").unwrap();
-    
-    // replace (from, to)
-    pre_file = pre_file.replace("{{DATE}}", date.trim());
-    pre_file = pre_file.replace("{{URL}}", url.trim());
-    
-    // writeは受け取った文字列を自動でバイト列に変換して書き込みを行うためbの必要なし
-    fs::write("pre_date.rs", pre_file).unwrap();
-    
-    // 実行結果
-    println!("{}",fs::read_to_string("pre_date.rs").unwrap());
 }

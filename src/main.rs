@@ -1,7 +1,9 @@
+mod waiting_cmd;
+mod set_path;
 mod create_predate;
 
-use crate::create_predate::create_file;
+use crate::waiting_cmd::set_command;
 
 fn main() {
-    create_file()
+    set_command()
 }
