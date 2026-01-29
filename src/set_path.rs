@@ -16,13 +16,15 @@ pub fn change_path() {
     let mut input_path = String::new();
     io::stdin().read_line(&mut input_path).unwrap();
     
+    let trimed_path = input_path.trim().trim_matches('"');
+    
     let mut setting_file = fs::read_to_string(path).unwrap();
     
-    setting_file = setting_file.replace("{{PATH}}", input_path.trim());
+    setting_file = setting_file.replace("{{PATH}}", trimed_path);
     
     fs::write(path, setting_file).unwrap();
     
-    println!("\nDone.\n[Settings]\npath = {}\n",input_path.trim());
+    println!("\nDone.\n[Settings]\npath = {}\n",trimed_path);
     
     set_command()
 }
