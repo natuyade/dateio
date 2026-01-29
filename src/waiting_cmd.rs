@@ -25,15 +25,7 @@ pub fn set_command() {
                     break
                 },
                 "quit" => break,
-                "help" => println!("
-                    \n
-                    Command list:
-                    \n\x20\x20\x20\x20path: set path.
-                    \n\x20\x20\x20\x20set: set date and imgsrc for premier.
-                    \n\x20\x20\x20\x20quit: close terminal.
-                    \n\x20\x20\x20\x20help: this command.
-                    \n
-                    "),
+                "help" => println!("\nCommand list:\n\x20\x20\x20\x20path: set path.\n\x20\x20\x20\x20set: set date and imgsrc for premier.\n\x20\x20\x20\x20quit: close terminal.\n\x20\x20\x20\x20help: this command.\n"),
                 _ => println!("Unknown command")
             };
     }
