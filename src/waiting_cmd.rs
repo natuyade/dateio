@@ -10,7 +10,6 @@ pub fn set_command() {
         println!("Type command.(or type help)");
         print!("user> ");
         io::stdout().flush().unwrap();
-<<<<<<< HEAD
 
         let mut input_cmd = String::new();
         stdin().read_line(&mut input_cmd).unwrap();
@@ -29,25 +28,5 @@ pub fn set_command() {
             ),
             _ => println!("Unknown command"),
         };
-=======
-        
-            let mut input_cmd = String::new();
-            stdin().read_line(&mut input_cmd).unwrap();
-            
-            let cmd = input_cmd.trim();
-            
-            match cmd {
-                "path" => {
-                    change_path()
-                },
-                "set" => {
-                    create_file();
-                    break
-                },
-                "quit" => break,
-                "help" => println!("\nCommand list:\n\x20\x20\x20\x20path: set path.\n\x20\x20\x20\x20set: set date and imgsrc for premier.\n\x20\x20\x20\x20quit: close terminal.\n\x20\x20\x20\x20help: this command.\n"),
-                _ => println!("Unknown command")
-            };
->>>>>>> 57b2d1d439931814285e81b68f5cf2d465d1ba93
     }
 }
