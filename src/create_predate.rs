@@ -55,7 +55,7 @@ pub fn create_file() {
         io::stdin().read_line(&mut url).unwrap();
         
         // trimで半角スペース,\t,\n,\rの空白を消せる
-        println!("\nDone.\ndate: {}, img_url: {}",date.trim(),url.trim());
+        println!("\nDone.\n\x20\x20\x20\x20date: {}, img_url: {}\n",date.trim(),url.trim());
         
         // ReadWrite用のファイル用意
         let mut pre_file = fs::read_to_string(&file_path).unwrap();

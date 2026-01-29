@@ -24,7 +24,7 @@ pub fn change_path() {
     
     fs::write(path, setting_file).unwrap();
     
-    println!("\nDone.\n[Settings]\npath = {}\n",trimed_path);
+    println!("\nDone.\n\x20\x20\x20\x20[Settings]\n\x20\x20\x20\x20path = {}\n",trimed_path);
     
     set_command()
 }
