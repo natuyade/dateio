@@ -49,14 +49,12 @@ pub fn create_file() {
             .expect("\nCouldn't write\n");
 
         println!("\nEnter date:");
-        print!("user> ");
         // 初期化型用意
         let mut date = String::new();
         // キーボード入力を受け取る.入力された文字をinputに書き込む.unwrap
         io::stdin().read_line(&mut date).unwrap();
 
         println!("\nEnter image url:");
-        print!("user> ");
         let mut url = String::new();
         io::stdin().read_line(&mut url).unwrap();
 
