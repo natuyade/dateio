@@ -39,23 +39,30 @@ pub fn create_file() {
         
         let file_path = folder_path.join(file_name);
         
+        /*
+         * path = の部分が空白の場合,無が入ったfolder_path(PathBuf)を受け取るが
+         * file_pathがあとからjoinしているため相対パスでfileが作られる
+         */
+         
         let mut file = fs::File::create(&file_path).expect("\nCouldn't create file\n");
         // b""は文字リテラルをバイト列化させる
         // std::io,fsはバイト単位でファイルを読み書きする
         file.write_all(b"pub const pre_date:[&str; 2] = [\"{{DATE}}\", \"{{URL}}\"];").expect("\nCouldn't write\n");
         
         println!("\nEnter date:");
+        print!("user> ");
         // 初期化型用意
         let mut date = String::new();
         // キーボード入力を受け取る.入力された文字をinputに書き込む.unwrap
         io::stdin().read_line(&mut date).unwrap();
         
         println!("\nEnter image url:");
+        print!("user> ");
         let mut url = String::new();
         io::stdin().read_line(&mut url).unwrap();
         
         // trimで半角スペース,\t,\n,\rの空白を消せる
-        println!("\nDone.\n\x20\x20\x20\x20date: {}, img_url: {}\n",date.trim(),url.trim());
+        println!("\nDone:\n\x20\x20\x20\x20date: {}, img_url: {}\n",date.trim(),url.trim());
         
         // ReadWrite用のファイル用意
         let mut pre_file = fs::read_to_string(&file_path).unwrap();

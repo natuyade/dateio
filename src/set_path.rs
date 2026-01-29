@@ -12,6 +12,7 @@ pub fn change_path() {
     file.write_all(b"[Settings]\npath = {{PATH}}").unwrap();
     
     println!("\nEnter src folder path:");
+    print!("user> ");
     
     let mut input_path = String::new();
     io::stdin().read_line(&mut input_path).unwrap();
@@ -24,7 +25,7 @@ pub fn change_path() {
     
     fs::write(path, setting_file).unwrap();
     
-    println!("\nDone.\n\x20\x20\x20\x20[Settings]\n\x20\x20\x20\x20path = {}\n",trimed_path);
+    println!("\nDone:\n\x20\x20\x20\x20[Settings]\n\x20\x20\x20\x20path = {}\n",trimed_path);
     
     set_command()
 }
