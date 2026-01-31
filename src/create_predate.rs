@@ -45,7 +45,7 @@ pub fn create_file() {
         let mut file = fs::File::create(&file_path).expect("\nCouldn't create file\n");
         // b""は文字リテラルをバイト列化させる
         // std::io,fsはバイト単位でファイルを読み書きする
-        file.write_all(b"pub const pre_date:[&str; 2] = [\"{{DATE}}\", \"{{URL}}\"];")
+        file.write_all(b"pub const PRE_DATE:[&str; 2] = [\"{{DATE}}\", \"{{URL}}\"];")
             .expect("\nCouldn't write\n");
 
         println!("\nEnter date:");
